@@ -2,6 +2,10 @@ Este parser reconhece o comando INSERT utilizando a sintaxe padrão ANSI-SQL 92,
 Só é aceito um INSERT com os nomes das colunas explícitos.
 
 
+Sintaxe
+
+INSERT INTO <nome_table> (attr1,..., attrn) VALUES (value_11, ..., value_1n), ... ,(value_m1, ..., value_mn); 
+
 Exemplos de uso:
 
 insert into Aluno (CPF, Nome, Endereco, Peso) values (83223,'Rafael','Avenida Fernando Machado, S/N',75.0), (9833,'Ricardo','Avenida General Osorio, 666N', 50.0);

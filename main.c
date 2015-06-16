@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
 	while(getline(&buffer_linha, &tam, stdin) != EOF)	{
 		c = 0;
 		xpto = buffer_linha;
-		while(*xpto != ' ' && *xpto != '\n')	
+		while(*xpto != ' ' && *xpto != '\n' && *xpto != ';')	
 				comando[c++] = *xpto++;
 		comando[c] = 0;
 		/* Reconhecimento de comandos */
