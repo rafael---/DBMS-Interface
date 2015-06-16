@@ -38,8 +38,6 @@ int main(int argc, char ** argv)
 		if(!strcmp(comando,"INSERT"))	{
 			if(!le_insert(xpto))
 				puts("Erro de sintaxe no INSERT");
-			imprime("Aluno"); 	
-
 			/* Temos que implementar os códigos de erro para especificar bem isso*/
 		}
 		else if(!strcmp(comando,"CONNECT")) 	{
@@ -60,6 +58,9 @@ int main(int argc, char ** argv)
 		}
 		else if(!strcmp(comando,"EXIT"))	
 			break;
+		else if(!strcmp(comando, "SELECT_ALL"))
+			imprime("Aluno"); 	
+	
 		else	
 			puts("Comando não reconhecido\n");
 		printf("%s> ",dbname);	
