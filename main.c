@@ -19,9 +19,6 @@ int main(int argc, char ** argv)
 	
 	if(argc == 2)	{
 		strcpy(dbname,argv[1]);
-		/*
-			Mil conexao aqui
-		*/
 		printf("Conectado ao banco de dados: %s\n",dbname);
 	}
 
@@ -41,20 +38,45 @@ int main(int argc, char ** argv)
 			/* Temos que implementar os códigos de erro para especificar bem isso*/
 		}
 		else if(!strcmp(comando,"CONNECT")) 	{
-			/* Conecta a um BD. 
-				Temos que adicionar esta funcionalidade ao SGBD 
-				
-			*/
 			c = 0;
 			while(*xpto == ' ')
 				xpto++;
 			while(isalnum(*xpto))
 				dbname[c++] = *xpto++;
 			dbname[c] = 0;
-			/*
-				Mil conexao aqui
-			*/
-			printf("Conectado ao banco de dados: %s\n",dbname);
+				
+			DIR* dir = opendir(dbname);
+
+			if (!dir) {
+				printf("O banco de dados %s não existe\n",dbname);
+				memset(dbname,0,5);
+			}
+			else	{
+				closedir(dir);
+				printf("Conectado ao banco de dados: %s\n",dbname);
+			}
+		}
+		else if(!strcmp(comando,"CREATE"))	{
+			xpto = copia_token(xpto,comando);
+			to_upper(comando);
+			if(!strcmp(comando,"DATABASE"))	{
+				while(*xpto == ' ')
+					xpto++;
+				c = 0;
+				while(isalnum(*xpto))
+					dbname[c++] = *xpto++;
+				to_lower(dbname);
+				if(!mkdir(dbname, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH))	{
+        			printf("Banco de dados criado com sucesso\n");
+					printf("Conectado ao banco de dados: %s\n",dbname);
+				}
+				else	{
+					printf("Erro ao criar banco de dados %s\n",dbname);
+					dbname[0] = 0;
+				}
+			}
+			else if(!strcmp(comando,"TABLE"))	
+				create_table(xpto,dbname);
 		}
 		else if(!strcmp(comando,"EXIT"))	
 			break;

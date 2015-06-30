@@ -19,11 +19,22 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
 
 struct tupla	{
 	char campo[40];
 	char valor[40];
+};
+
+struct tipotupla	{
+	char campo[40];
+	char tipo[20];
+	char attr; /* 0 - Nothing, 1 - Primary key, 2 - Foreign Key */
+	char fk_db[40];
+	char fk_field[40];
 };
 
 char * copia_token(char * buffer, char * comando);
@@ -38,6 +49,11 @@ void to_upper(char * str);
 Converte a string str para letras maiúsculas para garantir que os comandos não sejam case-sensitive
 */
 
+void to_lower(char * str);
+/*
+Converte a string str para letras minúsculas
+*/
+
 bool le_insert(char * linha);
 /*
 Esta função é responsável por ler uma linha e verificar a sintaxe e inserir o(s) valor(es) na tabela
@@ -46,4 +62,15 @@ Esta função é responsável por ler uma linha e verificar a sintaxe e inserir 
 char * copia_string(char * buffer, char * valor);	
 /*
 É a função responsável por copiar os valores dos atributos formatados do buffer.
+*/
+
+char * copia_nome(char * buffer, char * valor);
+/*
+Copia os "nomes" de tuplas, funções, comandos mais simples, etc. 
+Aceita apenas letras e números, apaga todos os outros caracteres da string
+*/
+
+bool create_table(char * linha, char * dbname);
+/*
+Esta função é responsável por interpretar o comando CREATE TABLE e chamar as funções de criação de tabela anteriormente criadas
 */
