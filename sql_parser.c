@@ -203,34 +203,42 @@ bool create_table(char * linha, char * dbname)	{
 		c++;
 	}while(*linha != ')' && *linha != ';' && *linha != '\n');
 	c--;
-	for(; c >= 0; c--)	{
-		/*
-			Aqui vc primeiramente verifica se os tipos são válidos (String e varchar = 'S', double e float = 'D', int e integer = 'I')
-			daí conforme a estrutura
-				struct tipotupla	{
-				char campo[40];
-				char tipo[20];
-				char attr; // 0 - Nothing, 1 - Primary key, 2 - Foreign Key 
-				char fk_db[40];
-				char fk_field[40];
-			};
-			Precisa converter o tipo
-			vc passa como argumento. Por exemplo
-				tab = iniciaTabela(tblname);
-            			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo_tuplas[c].tipo[0], sizeof(tipo) ou n,FK,fk_db,fk_field);     
-				...
-				tab = finalizaTabela(tab);   
+	arquivo[strlen(arquivo)-4] = 0;
 
-				*/
-		if(!tipo_tuplas[c].attr)
-			printf("%s - %s\n",tipo_tuplas[c].campo,tipo_tuplas[c].tipo);
-		else if(tipo_tuplas[c].attr == 1)
-			printf("PK - %s - %s\n",tipo_tuplas[c].campo,tipo_tuplas[c].tipo);
+	table * tab = iniciaTabela(arquivo);
+	
+	for(; c >= 0; c--)	{
+		int tamanho; char tipo;
+		to_upper(tipo_tuplas[c].tipo);
+		if(!strcmp(tipo_tuplas[c].tipo,"STRING") || !strcmp(tipo_tuplas[c].tipo,"VARCHAR"))	{
+			tipo = 'S';
+			tamanho = 40;
+		} else if(!strcmp(tipo_tuplas[c].tipo,"INTEGER") || !strcmp(tipo_tuplas[c].tipo,"INT"))	{
+			tipo = 'I';
+			tamanho = sizeof(int);
+		}
+		else if(!strcmp(tipo_tuplas[c].tipo,"DOUBLE") || !strcmp(tipo_tuplas[c].tipo,"FLOAT"))	{
+			tipo = 'D';
+			tamanho = sizeof(double);
+		}
+		else	{
+			printf("%s\n", tipo_tuplas[c].tipo);
+			puts("Tipo invalido!");
+			return false;
+		}
+		if(!tipo_tuplas[c].attr)	
+			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo, tamanho,NPK,"","");     
+		else if(tipo_tuplas[c].attr == 1)	
+			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo, tamanho,PK,"",""); 
 		else
-			printf("FK - %s - %s REF (%s.%s)\n",tipo_tuplas[c].campo,tipo_tuplas[c].tipo,tipo_tuplas[c].fk_db,tipo_tuplas[c].fk_field);
+			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo, tamanho,FK,tipo_tuplas[c].fk_db,tipo_tuplas[c].fk_field);  
 	}
+	
+	finalizaTabela(tab);
+	
 	putchar('\n');
 
 	return true;
 }
+
 
