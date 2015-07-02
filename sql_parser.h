@@ -54,7 +54,7 @@ void to_lower(char * str);
 Converte a string str para letras minúsculas
 */
 
-bool le_insert(char * linha);
+bool le_insert(char * linha, char * dbname);
 /*
 Esta função é responsável por ler uma linha e verificar a sintaxe e inserir o(s) valor(es) na tabela
 */

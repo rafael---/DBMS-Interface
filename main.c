@@ -7,15 +7,7 @@ int main(int argc, char ** argv)
 	char *buffer_linha, *xpto, comando[255], dbname[255] = {0};
 	size_t tam = 0;
 	uint32_t c;
-	table * tab;
 
-
-	tab = iniciaTabela("Aluno");                                              
-        tab = adicionaCampo(tab, "CPF"     , 'I', (sizeof(int))   ,PK,"","");    
-        tab = adicionaCampo(tab, "Nome"    , 'S', 20              ,NPK,"","");        
-        tab = adicionaCampo(tab, "Endereco", 'S', 20              ,NPK,"","");
-       	tab = adicionaCampo(tab, "Peso"    , 'D', (sizeof(double)),NPK,"","");
-        finalizaTabela(tab);
 	
 	if(argc == 2)	{
 		strcpy(dbname,argv[1]);
@@ -33,7 +25,7 @@ int main(int argc, char ** argv)
 		/* Reconhecimento de comandos */
 		to_upper(comando);
 		if(!strcmp(comando,"INSERT"))	{
-			if(!le_insert(xpto))
+			if(!le_insert(xpto,dbname))
 				puts("Erro de sintaxe no INSERT");
 			/* Temos que implementar os códigos de erro para especificar bem isso*/
 		}
@@ -80,8 +72,15 @@ int main(int argc, char ** argv)
 		}
 		else if(!strcmp(comando,"EXIT"))	
 			break;
-		else if(!strcmp(comando, "SELECT_ALL"))
-			imprime("Aluno"); 	
+		else if(!strcmp(comando, "SELECT_ALL"))	{
+			char tmp_name[255];
+			strcpy(tmp_name,dbname);
+			while(*xpto == ' ') xpto++;
+			xpto = copia_nome(xpto,comando);
+			strcat(tmp_name,"/");
+			strcat(tmp_name,comando);
+			imprime(tmp_name); 	
+		}
 	
 		else	
 			puts("Comando não reconhecido\n");

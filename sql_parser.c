@@ -64,10 +64,11 @@ void to_lower(char * str)	{
 	}
 }
 
-bool le_insert(char * linha)	{
+bool le_insert(char * linha, char * dbname)	{
 	char str_buffer[255], tblname[40];
 	struct tupla attrs[20];
 	uint32_t  tcampos= 0, tvalores=0, ttuples = 0;
+	
 	table * tab = malloc(sizeof(table));	
 
 	linha = copia_token(linha, str_buffer);
@@ -75,6 +76,23 @@ bool le_insert(char * linha)	{
 	if(strcmp(str_buffer,"INTO"))
 		return false;
 	linha = copia_token(linha,tblname);
+
+	if(!*dbname)	{
+		char *p = strchr(tblname,'.');
+		if(!p)	{
+			printf("Não conectado a um banco de dados\n");
+			return false;
+		}
+		*p = '/';
+	}
+	else	{
+		char temp[255];
+		strcpy(temp,dbname);
+		strcat(temp,"/");
+		strcat(temp,tblname);
+		strcpy(tblname,temp);
+	}
+
 	
 	if(!linha) return false;
 	
