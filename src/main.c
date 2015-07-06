@@ -1,5 +1,5 @@
 #include "sql_parser.h"
-#include "buffend.h"
+#include "func.h"
 
 
 int main(int argc, char ** argv)
@@ -82,6 +82,11 @@ int main(int argc, char ** argv)
 			imprime(tmp_name); 	
 		}
 	
+		else if(!strcmp(comando, "LIST_TAB")){
+			while(*xpto == ' ')xpto++;
+			xpto = copia_nome(xpto, comando);
+			db_table(comando);
+		}	
 		else	
 			puts("Comando não reconhecido\n");
 		printf("%s> ",dbname);	

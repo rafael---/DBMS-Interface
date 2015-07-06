@@ -13,6 +13,7 @@ struct fs_objects leObjeto(char *nTabela){
 
     if(!verificaNomeTabela(nTabela)){
         printf("Erro GRAVE! na função leObjeto(). Nome da tabela inválido.\nAbortando...\n");
+		printf("%s\n", nTabela);
 		free(tupla);
         exit(1);
     }

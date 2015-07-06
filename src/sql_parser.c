@@ -95,6 +95,8 @@ bool le_insert(char * linha, char * dbname)	{
 
 	
 	if(!linha) return false;
+
+	printf("%s\n", tblname);	
 	
 	if(!verificaNomeTabela(tblname)){
 		printf("\nTabela \"%s\" não existe\n", tblname);
@@ -145,6 +147,7 @@ bool le_insert(char * linha, char * dbname)	{
 		cl = insereValor(tab, cl, attrs[c%tcampos].campo, attrs[c].valor);
 	finalizaInsert(tblname, cl);	
 	
+
 	printf("\n%d new rows\n", ttuples);
 	
 	return true;
