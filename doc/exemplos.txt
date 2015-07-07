@@ -3,7 +3,7 @@ CREATE TABLE Aluno (mat INTEGER PRIMARY, nome VARCHAR);
 CREATE TABLE Notas (nota DOUBLE, disc VARCHAR, id INTEGER REFERENCES Aluno(mat));
 CREATE TABLE Curso (id INTEGER PRIMARY, nome STRING);
 INSERT INTO Aluno (mat, nome) VALUES (1, 'Ronaldo'), (2, 'Ricardo'), (3, 'Zatesko'), (4, 'Lula');
-INSERT INTO Notas (nota, disc, id) VALUES (8, 'MAT', 2), (7.6, 'PORT', 1), (4.5, 'PROG', 3);
+INSERT INTO Notas (nota, disc, id) VALUES (8.0, 'MAT', 2), (7.6, 'PORT', 1), (4.5, 'PROG', 3);
 SHOW Aluno;
 SHOW Notas;
 LIST uffs;
