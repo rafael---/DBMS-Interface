@@ -7,6 +7,16 @@ int main(int argc, char ** argv)
 	char *buffer_linha, *xpto, comando[255], dbname[255] = {0};
 	size_t tam = 0;
 	uint32_t c;
+	table * tab;
+
+
+
+tab = iniciaTabela("Aluno"); //Cria a tabela
+tab = adicionaCampo(tab, "CPF" , 'I', (sizeof(int)) ,PK,"",""); //Cria os atributos
+tab = adicionaCampo(tab, "Nome" , 'S', 20 ,NPK,"","");
+tab = adicionaCampo(tab, "Endereco", 'S', 20 ,NPK,"","");
+tab = adicionaCampo(tab, "Peso" , 'D', (sizeof(double)),NPK,"","");
+finalizaTabela(tab);
 
 	
 	if(argc == 2)	{
@@ -72,7 +82,7 @@ int main(int argc, char ** argv)
 		}
 		else if(!strcmp(comando,"EXIT"))	
 			break;
-		else if(!strcmp(comando, "SELECT_ALL"))	{
+		else if(!strcmp(comando, "SHOW"))	{
 			char tmp_name[255];
 			strcpy(tmp_name,dbname);
 			while(*xpto == ' ') xpto++;
@@ -82,11 +92,20 @@ int main(int argc, char ** argv)
 			imprime(tmp_name); 	
 		}
 	
-		else if(!strcmp(comando, "LIST_TAB")){
+		else if(!strcmp(comando, "LIST")){
 			while(*xpto == ' ')xpto++;
 			xpto = copia_nome(xpto, comando);
 			db_table(comando);
 		}	
+		else if(!strcmp(comando, "DROPTABLE")){
+			char tmp_name[255];
+			strcpy(tmp_name,dbname);
+			while(*xpto == ' ') xpto++;
+			xpto = copia_nome(xpto,comando);
+			strcat(tmp_name,"/");
+			strcat(tmp_name,comando);
+			excluirTabela(tmp_name);	
+		}
 		else	
 			puts("Comando não reconhecido\n");
 		printf("%s> ",dbname);	

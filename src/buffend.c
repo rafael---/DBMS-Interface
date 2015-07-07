@@ -955,14 +955,14 @@ void imprime(char nomeTabela[]) {
 
     if(esquema == ERRO_ABRIR_ESQUEMA){
         printf("Erro GRAVE ao Criar o ESQUEMA.\nAbortando...\n");
-        exit(1);
+        return;
     }
 
     tp_buffer *bufferpoll = initbuffer();
 
     if(bufferpoll == ERRO_DE_ALOCACAO){
         printf("Erro GRAVE alocar memória para o BUFFER.\nAbortando...\n");
-        exit(1);
+        return;
     }
 
     erro = SUCCESS;
@@ -974,7 +974,7 @@ void imprime(char nomeTabela[]) {
 
     if(pagina == ERRO_PARAMETRO){
          printf("Erro GRAVE ao abrir a TABELA.\nAbortando...\n");
-        exit(1);
+         return;
     }
     
     // PARA IMPRIMIR PÁGINA

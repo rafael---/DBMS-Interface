@@ -94,9 +94,7 @@ bool le_insert(char * linha, char * dbname)	{
 	}
 
 	
-	if(!linha) return false;
-
-	printf("%s\n", tblname);	
+	if(!linha) return false;	
 	
 	if(!verificaNomeTabela(tblname)){
 		printf("\nTabela \"%s\" não existe\n", tblname);
@@ -223,41 +221,43 @@ bool create_table(char * linha, char * dbname)	{
 		
 		c++;
 	}while(*linha != ')' && *linha != ';' && *linha != '\n');
-	c--;
+
 	arquivo[strlen(arquivo)-4] = 0;
 
 	table * tab = iniciaTabela(arquivo);
-	
-	for(; c >= 0; c--)	{
+
+	for(i=0; i < c; i++)	{
 		int tamanho; char tipo;
-		to_upper(tipo_tuplas[c].tipo);
-		if(!strcmp(tipo_tuplas[c].tipo,"STRING") || !strcmp(tipo_tuplas[c].tipo,"VARCHAR"))	{
+
+		to_upper(tipo_tuplas[i].tipo);
+
+		if(!strcmp(tipo_tuplas[i].tipo,"STRING") || !strcmp(tipo_tuplas[i].tipo,"VARCHAR"))	{
 			tipo = 'S';
 			tamanho = 20;
-		} else if(!strcmp(tipo_tuplas[c].tipo,"INTEGER") || !strcmp(tipo_tuplas[c].tipo,"INT"))	{
+		} else if(!strcmp(tipo_tuplas[i].tipo,"INTEGER") || !strcmp(tipo_tuplas[i].tipo,"INT"))	{
 			tipo = 'I';
 			tamanho = sizeof(int);
 		}
-		else if(!strcmp(tipo_tuplas[c].tipo,"DOUBLE") || !strcmp(tipo_tuplas[c].tipo,"FLOAT"))	{
+		else if(!strcmp(tipo_tuplas[i].tipo,"DOUBLE") || !strcmp(tipo_tuplas[i].tipo,"FLOAT"))	{
 			tipo = 'D';
 			tamanho = sizeof(double);
 		}
 		else	{
-			printf("%s\n", tipo_tuplas[c].tipo);
+			printf("%s\n", tipo_tuplas[i].tipo);
 			puts("Tipo invalido!");
 			return false;
 		}
-		if(!tipo_tuplas[c].attr)	
-			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo, tamanho,NPK,"","");     
+		if(!tipo_tuplas[i].attr)	
+			tab = adicionaCampo(tab, tipo_tuplas[i].campo, tipo, tamanho,NPK,"","");     
 		else if(tipo_tuplas[c].attr == 1)	
-			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo, tamanho,PK,"",""); 
+			tab = adicionaCampo(tab, tipo_tuplas[i].campo, tipo, tamanho,PK,"",""); 
 		else
-			tab = adicionaCampo(tab, tipo_tuplas[c].campo, tipo, tamanho,FK,tipo_tuplas[c].fk_db,tipo_tuplas[c].fk_field);  
+			tab = adicionaCampo(tab, tipo_tuplas[i].campo, tipo, tamanho,FK,tipo_tuplas[c].fk_db,tipo_tuplas[c].fk_field); 
 	}
 	
 	finalizaTabela(tab);
 	
-	putchar('\n');
+	puts("CREATE TABLE");
 
 	return true;
 }
