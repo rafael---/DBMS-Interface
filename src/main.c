@@ -7,17 +7,6 @@ int main(int argc, char ** argv)
 	char *buffer_linha, *xpto, comando[255], dbname[255] = {0};
 	size_t tam = 0;
 	uint32_t c;
-	table * tab;
-
-
-
-tab = iniciaTabela("Aluno"); //Cria a tabela
-tab = adicionaCampo(tab, "CPF" , 'I', (sizeof(int)) ,PK,"",""); //Cria os atributos
-tab = adicionaCampo(tab, "Nome" , 'S', 20 ,NPK,"","");
-tab = adicionaCampo(tab, "Endereco", 'S', 20 ,NPK,"","");
-tab = adicionaCampo(tab, "Peso" , 'D', (sizeof(double)),NPK,"","");
-finalizaTabela(tab);
-
 	
 	if(argc == 2)	{
 		strcpy(dbname,argv[1]);
@@ -106,7 +95,12 @@ finalizaTabela(tab);
 			strcat(tmp_name,comando);
 			excluirTabela(tmp_name);	
 		}
-		else	
+		else if(!strcmp(comando, "HELP")){
+			char tmp_line[255];
+			FILE * F = fopen("../doc/help.txt", "r");
+			while(fscanf(F, " %[^\n]s", tmp_line)!= EOF)
+				puts(tmp_line); 
+		}	
 			puts("Comando não reconhecido\n");
 		printf("%s> ",dbname);	
 	}

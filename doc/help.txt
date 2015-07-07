@@ -1,0 +1,28 @@
+<INSERT>
+       INSERT INTO <table_name> (attr1, ..., attrn) VALUES (value11,...,value1n),...,(valuem1,...valuemn);
+	
+
+<CREATE DATABASE>
+	CREATE DATABASE <database_name>;
+
+<CREATE TABLE>
+	CREATE TABLE <table_name> (atr1_name DATA_TYPE [PRYMARY | REFERENCES tp_name(atr_name)], ...);
+	
+	DATA TYPE = [INTEGER, DOUBLE, VARCHAR]
+
+<DROP TABLE>
+	DROPTABLE <table_name>;
+
+<CONNECT>
+	CONNECT <database_name>;
+
+<SHOW>
+	SHOW <table_name>;
+
+<LIST>
+	LIST <database_name>;
+
+
+<EXIT>
+	EXIT;
+
