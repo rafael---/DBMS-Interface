@@ -6,7 +6,6 @@ sintaxe padrão ANSI-SQL 92, incluindo inserção de múltiplas tuplas.
 	
 	Insere na tabela <table_name> os valores <value> nos correspondentes atributos <attr>.
 
-
 <CREATE DATABASE>
 	CREATE DATABASE <database_name>;
 
@@ -15,7 +14,7 @@ sintaxe padrão ANSI-SQL 92, incluindo inserção de múltiplas tuplas.
 <CREATE TABLE>
 	CREATE TABLE <table_name> (atrn_name DATA_TYPE [PRYMARY | REFERENCES tp_name(atr_name)], ...);
 	
-	DATA TYPE = [INTEGER, DOUBLE, VARCHAR, INT, FLOAT, STRING]
+	DATA TYPE = [INTEGER, DOUBLE, VARCHAR]
 	
 	Cria a tabela <table_name> com os atributos [atr0_name, atrn_name]. 
 	

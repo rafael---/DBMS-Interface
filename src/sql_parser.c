@@ -167,7 +167,6 @@ bool create_table(char * linha, char * dbname)	{
 	strcat(arquivo, "/");
 	strcat(arquivo,tblname);
 	strcat(arquivo,".dat");
-	printf("%s\n",arquivo);
 	if(existeArquivo(arquivo))	{
 		printf("A tabela %s já existe\n",tblname);
 		return false;

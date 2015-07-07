@@ -27,16 +27,41 @@ void db_table ( char * dbname ){
     }
 }
 
-/*
+
 void tb_schema (char * tbname, char * dbname ){
-	strcat(dbname, "/");
-	strcat(dbname, tbname);
-	tbname = dbname;	
+	struct fs_objects objeto;	
+	int i;	
+	char temp[200];
+	tp_table * schema;
+
+	strcpy(temp, dbname);
+	strcat(temp, "/");
+	
+	strcat(temp, tbname);
+	tbname = temp;	
 	
 	if(!verificaNomeTabela(tbname)){
 		printf("\nTabela não existe\n");
 		return;
-	}
-	while(*tbname++!='/');
+	}	
+
+	objeto = leObjeto(tbname);
+	schema = leSchema(objeto);
 	
-}*/
+	puts("Atribute | Type | Modificer");
+
+	for ( i = 0; i < objeto.qtdCampos; i++){
+		printf("%s ", schema[i].nome);
+		switch(schema[i].tipo){
+			case 'I': printf("INTEGER ");break;
+			case 'D': printf("DOUBLE ");break;
+			case 'S': printf("STRING ");
+		}
+		switch(schema[i].chave){
+			case 0: puts(" - ");break;
+			case 1: puts("PRIMARY KEY");break;
+			case 2: puts("FOREIGN KEY");
+		}
+	}		
+
+}

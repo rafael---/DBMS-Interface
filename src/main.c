@@ -100,7 +100,11 @@ int main(int argc, char ** argv)
 			FILE * F = fopen("../doc/help.txt", "r");
 			while(fscanf(F, " %[^\n]s", tmp_line)!= EOF)
 				puts(tmp_line); 
-		}	
+		}else if(!strcmp(comando, "SCHEMA")){
+			while(*xpto == ' ')xpto++;
+			xpto = copia_nome(xpto, comando);
+			tb_schema(comando, dbname);
+		}else	
 			puts("Comando não reconhecido\n");
 		printf("%s> ",dbname);	
 	}
